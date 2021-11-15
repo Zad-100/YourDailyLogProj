@@ -1,0 +1,10 @@
+<!--This html file contains elements common to all pages; every other template
+    will inherit from this.-->
+<!--The only element that we want in each page is the title of the app at the 
+    top which also be the link to the home page.-->
+
+<p>
+  <a href="{% url 'YourDailyLog_App:index' %}">YOUR DAILY LOG</a>
+</p>
+
+{% block content %}{% endblock content %}
