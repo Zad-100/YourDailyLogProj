@@ -1,0 +1,22 @@
+<!--
+  This is the template file for the topics page that lists a bulleted list
+  of all the topics by a user.
+-->
+
+{% extends "yourdailylog_app/base.html" %}
+
+{% block content %}
+  <p>TOPICS</p>
+  <ul>
+    {% for topic in topicNames %}
+      <li>
+        <a href="{% url 'YourDailyLog_App:topic' topic.id %}">
+          {{ topic }}
+        </a>
+      </li>
+    {% empty %}
+      No topics have been added yet.
+    {% endfor %}
+  </ul>
+
+{% endblock content %}

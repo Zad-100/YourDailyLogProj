@@ -1,0 +1,29 @@
+<!--
+  This is an individual topic page that shows the various entries that the
+  user made. The entries are shown in chronological order along with showing
+  the date and time added.
+-->
+
+{% extends "yourdailylog_app/base.html" %}
+
+{% block content %}
+
+  <p>Topic: {{ topicName }}</p>
+
+  <p>Entries:</p>
+  <ul>
+    {% for entry in entries %}
+      <li>
+        <p>
+          {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
+        </p>
+        <p>
+          {{ entry.entryText|linebreaks }}
+        </p>
+      </li>
+    {% empty %}
+      There are no entries for this topic yet.
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
