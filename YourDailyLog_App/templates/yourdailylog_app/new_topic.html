@@ -1,0 +1,40 @@
+<!--
+    This is the template for the page that lets user to add a new topic to the
+    database
+-->
+
+<!--Inherits from the base template-->
+{% extends "yourdailylog_app/base.html" %}
+
+{% block content %}
+  <p>Add a new topic:</p>
+  
+  <!--
+    the action argument tells browser where to send the data in the form;
+    in this case, it is sent back to the new_topic() view function
+
+    the method argument tells the browser to submit the data as 'POST' request
+  -->
+  <form action="{% url 'YourDailyLog_App:new_topic' %}" method='post'>
+    
+    <!--
+      csrf_token tag is used by Django to prevent attackers from using the form
+      to gain unauthorised access to the server (cross-site request forgery)
+    -->
+    {% csrf_token %}
+    
+    <!--
+      the templatye variable {{ form.as_p }} makes Django create all the fields
+      necessary to display the form automatically
+      as_p modifier tells Django to render all the form elements in paragraphs
+    -->
+    {{ form.as_p }}
+
+    <!--
+      we define a submit button for the form as Django doesn't create one
+      automatically
+    -->
+    <button name="Submit">Add Topic</button>
+  </form>
+
+{% endblock content %}

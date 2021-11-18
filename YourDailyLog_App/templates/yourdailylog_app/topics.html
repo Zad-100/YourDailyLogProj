@@ -3,13 +3,23 @@
   of all the topics by a user.
 -->
 
+<!--Inherits from the base template-->
 {% extends "yourdailylog_app/base.html" %}
 
+<!--Start of the content block-->
 {% block content %}
   <p>TOPICS</p>
+
+  <!--
+    The <ul> tag stands for 'unordered list' and the <li> tag creates bulleted
+    lists
+  -->
   <ul>
+    <!--For loop start-->
     {% for topic in topicNames %}
       <li>
+
+        <!--Changing topic name to a link-->
         <a href="{% url 'YourDailyLog_App:topic' topic.id %}">
           {{ topic }}
         </a>
@@ -18,5 +28,7 @@
       No topics have been added yet.
     {% endfor %}
   </ul>
+
+  <a href="{% url 'YourDailyLog_App:new_topic' %}">Add a New Topic</a>
 
 {% endblock content %}
