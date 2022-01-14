@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Topic
 
-from .forms import TopicForm # programmer defined
+from .forms import TopicForm, EntryForm # programmer defined
 
 def index(request):
     """The homepage for Your Daily Log"""
@@ -44,18 +44,42 @@ def new_topic(request):
                                  # form
                                  # 'GET' request (probably)
         # No data submitted; create a blank form
-        form = TopicForm() # instance created of TopicForm
+        formForNewTopic = TopicForm() # instance created of TopicForm
     else:
         # POST data submitted; process data
-        form = TopicForm(data=request.POST)
-        if form.is_valid():
-            form.save()
+        formForNewTopic = TopicForm(data=request.POST)
+        if formForNewTopic.is_valid():
+            formForNewTopic.save()
             
             # redirect() takes in the name of a view and redirect the user to
             # that view
             return redirect('YourDailyLog_App:topics')
 
     # Display a blank or invalid form
-    context = {"form": form}
+    context = {"formForNewTopic": formForNewTopic}
 
     return render(request, 'yourdailylog_app/new_topic.html', context)
+
+def new_entry(request, topicID):
+    """
+        Adds a new entry under a particular topic
+    """
+    topicName = Topic.objects.get(id=topicID)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form
+        formForEntry = EntryForm() # new instance created
+    else:
+        # POST data submitted; process data
+        formForEntry = EntryForm(data=request.POST)
+        if formForEntry.is_valid():
+            # commit is set to False - "don't save it to the database yet"
+            newEntry = formForEntry.save(commit=False)
+            newEntry.topic = topicName
+            newEntry.save()
+
+            return redirect('YourDailyLog_App:topic', topicID=topicID)
+
+    # Display a blank or invalid form
+    context = {"topicName": topicName, "formForEntry": formForEntry}
+    return render(request, "yourdailylog_app/new_entry.html", context)
