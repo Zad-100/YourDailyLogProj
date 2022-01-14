@@ -7,7 +7,8 @@
 {% extends "yourdailylog_app/base.html" %}
 
 {% block content %}
-  <p>Add a new topic:</p>
+
+  <p>Add New Topic:</p>
   
   <!--
     the action argument tells browser where to send the data in the form;
@@ -28,13 +29,13 @@
       necessary to display the form automatically
       as_p modifier tells Django to render all the form elements in paragraphs
     -->
-    {{ form.as_p }}
+    {{ formForNewTopic.as_p }}
 
     <!--
       we define a submit button for the form as Django doesn't create one
       automatically
     -->
-    <button name="Submit">Add Topic</button>
+    <button name="Submit">Add This Topic</button>
   </form>
 
 {% endblock content %}
