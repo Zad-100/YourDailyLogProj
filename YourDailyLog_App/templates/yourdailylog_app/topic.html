@@ -4,6 +4,7 @@
   the date and time added.
 -->
 
+<!--Inherits from the base html file-->
 {% extends "yourdailylog_app/base.html" %}
 
 {% block content %}
@@ -11,6 +12,19 @@
   <p>Topic: {{ topicName }}</p>
 
   <p>Entries:</p>
+
+  <!--
+    Including a link to the new_entry page from each topic page
+  -->
+  <p>
+    <a href="{% url 'YourDailyLog_App:new_entry' topicName.id %}">
+      Add New Entry
+    </a>
+  </p>
+
+  <!--
+    Displaying the entries for the topics in chronological order
+  -->
   <ul>
     {% for entry in entries %}
       <li>
