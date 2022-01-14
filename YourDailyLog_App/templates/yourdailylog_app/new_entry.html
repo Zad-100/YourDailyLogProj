@@ -1,0 +1,31 @@
+<!--
+    This is for the page that displays a blank form or an invalid one
+-->
+
+<!--Inherits from the base html file-->
+{% extends 'yourdailylog_app/base.html' %}
+
+{% block content %}
+
+  <p>
+      <!--Changing the topic name to a link-->
+      <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
+          {{ topicName }}
+      </a>
+  </p>
+  
+  <p>Create New Entry:</p>
+  
+  <!--
+      form action takes the topic id to associate the entry with the correct
+      topic
+  -->
+  <form action="{% url 'YourDailyLog_App:new_entry' topicName.id %}"
+                       method="post">
+      {% csrf_token %} <!--restrict unauthorised access to the server-->
+      {{ formForEntry.as_p }} <!--display all fields automatically and in
+                                  paragraphs-->
+      <button name="Submit">Add This Entry</button>
+  </form>
+  
+{% endblock content %}
