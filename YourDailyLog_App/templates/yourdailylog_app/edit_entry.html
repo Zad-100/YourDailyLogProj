@@ -1,0 +1,32 @@
+<!--
+    This is for the page that displays the area for editing the already
+    existing entry
+-->
+
+<!--Inherits from the base html file-->
+{% extends 'yourdailylog_app/base.html' %}
+
+{% block content %}
+
+  <!--Display the topic name with the link to that topic's page-->
+  <p>
+    <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
+      {{ topicName }}
+    </a>
+  </p>
+
+  <p>Edit This entry:</p>
+  
+  <!--Sending form back to edit_entry() for processing with the entry's ID-->
+  <form action="{% url "YourDailyLog_App:edit_entry" entry.id %}" 
+               method='post'>
+               
+    {% csrf_token %}
+    {{ formForEditing.as_p }}
+
+    <button name="Submit">
+      Save Changes
+    </button>
+  </form>
+
+{% endblock content %}
