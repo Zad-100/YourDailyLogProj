@@ -8,6 +8,8 @@ class Topic(models.Model):
     def __str__(self):
         """Returns the string representation of the model"""
         return self.topicName
+    # end function
+# end class Topic
 
 class Entry(models.Model):
     """Something specific about a topic (an Entry about a topic, that is)"""
@@ -17,6 +19,7 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name_plural = "Entries"
+    # end class Meta
 
     def __str__(self):
         """Return a string representation of the model"""
@@ -24,3 +27,5 @@ class Entry(models.Model):
             return self.entryText
 
         return f"{self.entryText[: 50]}..."
+    # end function
+# end class Entry

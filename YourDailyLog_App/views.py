@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 
-from .models import Topic
+from .models import Topic, Entry
 
 from .forms import TopicForm, EntryForm # programmer defined
 
 def index(request):
     """The homepage for Your Daily Log"""
     return render(request, "yourdailylog_app/index.html")
+# end function index()
 
 def topics(request):
     """The topics page that shows all topics entered by a user"""
@@ -15,6 +16,7 @@ def topics(request):
                                          # template so that it can work on it
 
     return render(request, "yourdailylog_app/topics.html", context)
+# end function topics()
 
 def topic(request, topicID):
     """
@@ -29,6 +31,7 @@ def topic(request, topicID):
     context = {'topicName': topicName, 'entries': entries}
 
     return render(request, 'yourdailylog_app/topic.html', context)
+# end function topic()
 
 def new_topic(request):
     """
@@ -59,6 +62,7 @@ def new_topic(request):
     context = {"formForNewTopic": formForNewTopic}
 
     return render(request, 'yourdailylog_app/new_topic.html', context)
+# end function new_topic()
 
 def new_entry(request, topicID):
     """
@@ -83,3 +87,32 @@ def new_entry(request, topicID):
     # Display a blank or invalid form
     context = {"topicName": topicName, "formForEntry": formForEntry}
     return render(request, "yourdailylog_app/new_entry.html", context)
+# end function new_entry()
+
+def edit_entry(request, entryID):
+    """Edit an existing entry using its ID"""
+    entry = Entry.objects.get(id=entryID)
+    topicName = entry.topic
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with current entry
+        formForEditing = EntryForm(instance=entry)
+    else:
+        # POST data submitted; process data
+        # instance argument creates a form instance with current entry
+        # data argument updates the form with the data from request.POST
+        formForEditing = EntryForm(instance=entry, data=request.POST)
+        
+        if formForEditing.is_valid():
+            formForEditing.save()
+
+            return redirect("YourDailyLog_App:topic", topicID=topicName.id)
+
+    context = {
+        "entry": entry,
+        "topicName": topicName,
+        'formForEditing': formForEditing,
+    }
+
+    return render(request, 'yourdailylog_app/edit_entry.html', context)
+# end function edit_entry()

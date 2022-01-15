@@ -16,6 +16,8 @@ class TopicForm(forms.ModelForm):
         fields = ['topicName'] # only topicName field needed for this form/blank
         labels = {'topicName': ''} # telling Django to not create a label for 
                                    # the topicName field
+    # end class Meta
+# end class TopicForm
 
 class EntryForm(forms.ModelForm):
     """Form for making entries"""
@@ -28,3 +30,5 @@ class EntryForm(forms.ModelForm):
         # text area, or a drop-down list
         # here the entry-text area becomes 100 columns wide
         widgets = {'entryText': forms.Textarea(attrs={'cols': 100})}
+    # end class Meta
+# end class EntryForm

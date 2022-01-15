@@ -27,14 +27,29 @@
   -->
   <ul>
     {% for entry in entries %}
+
+      <!--Show in bulleted lists-->
       <li>
+
+        <!--First, display the Day, Date, Time-->
         <p>
           {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
         </p>
+        
+        <!--After each entry give a line break-->
         <p>
           {{ entry.entryText|linebreaks }}
         </p>
+
+        <!--To edit the existing entry-->
+        <p>
+          <a href="{% url 'YourDailyLog_App:edit_entry' entry.id %}">
+            edit
+          </a>
+        </p>
       </li>
+
+    <!--If there are no entries under a particular topic-->  
     {% empty %}
       There are no entries for this topic yet.
     {% endfor %}
