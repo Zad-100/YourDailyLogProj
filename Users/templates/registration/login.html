@@ -1,0 +1,41 @@
+<!--
+  Template for the login page
+-->
+
+<!--Inherits from base.html to have the same look and feel as the rest-->
+<!--Templates in an app can inherit from templates in another app-->
+{% extends "yourdailylog_app/base.html" %}
+
+{% block content %}
+  
+  <!--
+    In case, errors arise and the username and password doesn't match any in
+    the database
+  -->
+  {% if for.errors %}
+    <!--Error message-->
+    <p>
+      Your username and password didn't match. lol
+      Please try again.
+    </p>
+  {% endif %}
+
+  <!--Telling the in-built login view function to process the form-->
+  <form method="post" action="{% url 'Users:login' %}">
+    {% csrf_token %}
+    {{ form.as_p }} <!--Display form sent by the login view function-->
+
+    <button name="Submit">
+      Log In, Dear!
+    </button>
+    
+    <!--
+      Adding a hidden form element that tells Django about where to redirect
+      next after the user has logged in successfully - back to homepage in
+      this case
+    -->
+    <input type="hidden", name="next"
+      value="{% url 'YourDailyLog_App:index' %}" />
+  </form>
+
+{% endblock content %}
