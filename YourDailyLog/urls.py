@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # Adding programmer defined urls.py so that it includes all the urls we
+    # create
     path('admin/', admin.site.urls),
     path('', include("YourDailyLog_App.urls")),
+    path('users/', include('Users.urls')),
 ]

@@ -31,8 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # My apps
+    # My apps to be included in the overall project
     'YourDailyLog_App',
+    'Users',
 
     # Django's default apps
     'django.contrib.admin',
