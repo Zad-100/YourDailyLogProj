@@ -7,7 +7,15 @@
 
 <p>
   <a href="{% url 'YourDailyLog_App:index' %}">YOUR DAILY LOG</a> -
-  <a href="{% url 'YourDailyLog_App:topics' %}">Topics</a>
+  <a href="{% url 'YourDailyLog_App:topics' %}">Topics</a> -
+  
+  {% if user.is_authenticated %}
+    Heeellloooo, {{ user.username }}!
+  {% else %}
+    <a href="{% url 'Users:login' %}">
+      Log In, Lovey-Dovey!
+    </a>
+  {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
