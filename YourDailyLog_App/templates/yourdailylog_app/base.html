@@ -16,6 +16,9 @@
       Log Me Out, Em Bored!
     </a>
   {% else %}
+    <a href="{% url 'Users:register' %}">
+      Em new here. Take me in!
+    </a> -
     <a href="{% url 'Users:login' %}">
       Log In, Lovey-Dovey!
     </a>

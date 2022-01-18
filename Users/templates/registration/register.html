@@ -1,0 +1,19 @@
+<!--
+  Register page for the new users
+-->
+
+{% extends "yourdailylog_app/base.html" %}
+
+{% block content %}
+  <form method="post" action="{% url 'Users:register' %}">
+    {% csrf_token %} <!--Security-->
+    {{ formForRegistration.as_p }}
+
+    <button name="Submit">
+      New baby, here! Take me in!
+    </button>
+
+    <input type="hidden" name="next"
+           value="{% url 'YourDailyLog_App:index' %}" />
+  </form>
+{% endblock content %}
