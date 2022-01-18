@@ -11,6 +11,10 @@
   
   {% if user.is_authenticated %}
     Heeellloooo, {{ user.username }}!
+    <!--Adding the log out link if the user is already authenticated-->
+    <a href="{% url 'Users:logout' %}">
+      Log Me Out, Em Bored!
+    </a>
   {% else %}
     <a href="{% url 'Users:login' %}">
       Log In, Lovey-Dovey!
