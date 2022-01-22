@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Topic, Entry
 
@@ -9,6 +10,14 @@ def index(request):
     return render(request, "yourdailylog_app/index.html")
 # end function index()
 
+# A decorator is a directive before a function that alters the function how to
+# behave; it applies to the function before it runs
+# @ lets Python know that login_required() function is to be run before topics()
+# login_required() checks whether a user is logged in, and Django runs the
+# topics code only if they are.
+# If the user isn't logged in they are redirected to the login page.
+
+@login_required # restrict access to certain pages to logged-in users
 def topics(request):
     """The topics page that shows all topics entered by a user"""
     topicNames = Topic.objects.order_by('dateAndTime')
@@ -18,6 +27,7 @@ def topics(request):
     return render(request, "yourdailylog_app/topics.html", context)
 # end function topics()
 
+@login_required
 def topic(request, topicID):
     """
        Show all the entries with their time stamp for a particular topic.
@@ -33,6 +43,7 @@ def topic(request, topicID):
     return render(request, 'yourdailylog_app/topic.html', context)
 # end function topic()
 
+@login_required
 def new_topic(request):
     """
         Adds a new topic. Also redirects the user back to the topics page
@@ -64,6 +75,7 @@ def new_topic(request):
     return render(request, 'yourdailylog_app/new_topic.html', context)
 # end function new_topic()
 
+@login_required
 def new_entry(request, topicID):
     """
         Adds a new entry under a particular topic
@@ -89,6 +101,7 @@ def new_entry(request, topicID):
     return render(request, "yourdailylog_app/new_entry.html", context)
 # end function new_entry()
 
+@login_required
 def edit_entry(request, entryID):
     """Edit an existing entry using its ID"""
     entry = Entry.objects.get(id=entryID)
