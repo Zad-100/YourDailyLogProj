@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 from .models import Topic, Entry
 
@@ -20,7 +21,12 @@ def index(request):
 @login_required # restrict access to certain pages to logged-in users
 def topics(request):
     """The topics page that shows all topics entered by a user"""
-    topicNames = Topic.objects.order_by('dateAndTime')
+    
+    # Retrieve only those topics whose owner attribute matches the
+    # requested/current user
+    topicNames = Topic.objects.filter(owner=request.user).order_by(
+                                                                   'dateAndTime'
+                                                                  )
     context = {'topicNames': topicNames} # context is to be passed to the
                                          # template so that it can work on it
 
@@ -34,6 +40,11 @@ def topic(request, topicID):
        The entries are shown in reverse chronological order.
     """
     topicName = Topic.objects.get(id=topicID)
+
+    # Making sure the topic belongs to the current user
+    if topicName.owner != request.user:
+        raise Http404 # standard error response when the requested resource
+                      # doesn't exist on the server
 
     # the '-' sign before dateAndTimeAdded attribute is used to order in reverse
     # order, that is in descending order
@@ -63,7 +74,12 @@ def new_topic(request):
         # POST data submitted; process data
         formForNewTopic = TopicForm(data=request.POST)
         if formForNewTopic.is_valid():
-            formForNewTopic.save()
+
+            # Associating the new topic to the current/requested user
+            newTopic = formForNewTopic.save(commit=False) # modifying the new
+                                                          # topic before saving
+            newTopic.owner = request.user
+            newTopic.save()
             
             # redirect() takes in the name of a view and redirect the user to
             # that view
@@ -92,7 +108,10 @@ def new_entry(request, topicID):
             # commit is set to False - "don't save it to the database yet"
             newEntry = formForEntry.save(commit=False)
             newEntry.topic = topicName
-            newEntry.save()
+            if topicName.owner == request.user:
+                newEntry.save()
+            else:
+                raise Http404
 
             return redirect('YourDailyLog_App:topic', topicID=topicID)
 
@@ -106,6 +125,10 @@ def edit_entry(request, entryID):
     """Edit an existing entry using its ID"""
     entry = Entry.objects.get(id=entryID)
     topicName = entry.topic
+
+    # Protecting the edit_entry page
+    if topicName.owner != request.user:
+        raise Http404 # issue 404 error
 
     if request.method != 'POST':
         # Initial request; pre-fill form with current entry
@@ -128,4 +151,4 @@ def edit_entry(request, entryID):
     }
 
     return render(request, 'yourdailylog_app/edit_entry.html', context)
-# end function edit_entry()
+# end function edit_entry() 
