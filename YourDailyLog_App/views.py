@@ -6,6 +6,13 @@ from .models import Topic, Entry
 
 from .forms import TopicForm, EntryForm # programmer defined
 
+# Making sure the topic belongs to the current user
+def checkTopicOwner(topic_name, requestedUser):
+    if topic_name.owner != requestedUser.user:
+        raise Http404 # standard error response when the requested resource
+                      # doesn't exist on the server
+# end function checkTopicOwner
+
 def index(request):
     """The homepage for Your Daily Log"""
     return render(request, "yourdailylog_app/index.html")
@@ -41,10 +48,7 @@ def topic(request, topicID):
     """
     topicName = Topic.objects.get(id=topicID)
 
-    # Making sure the topic belongs to the current user
-    if topicName.owner != request.user:
-        raise Http404 # standard error response when the requested resource
-                      # doesn't exist on the server
+    checkTopicOwner(topicName, request) # function call
 
     # the '-' sign before dateAndTimeAdded attribute is used to order in reverse
     # order, that is in descending order
@@ -98,6 +102,8 @@ def new_entry(request, topicID):
     """
     topicName = Topic.objects.get(id=topicID)
 
+    checkTopicOwner(topicName, request) # function call
+
     if request.method != 'POST':
         # No data submitted; create a blank form
         formForEntry = EntryForm() # new instance created
@@ -108,10 +114,7 @@ def new_entry(request, topicID):
             # commit is set to False - "don't save it to the database yet"
             newEntry = formForEntry.save(commit=False)
             newEntry.topic = topicName
-            if topicName.owner == request.user:
-                newEntry.save()
-            else:
-                raise Http404
+            newEntry.save()
 
             return redirect('YourDailyLog_App:topic', topicID=topicID)
 
@@ -123,12 +126,15 @@ def new_entry(request, topicID):
 @login_required
 def edit_entry(request, entryID):
     """Edit an existing entry using its ID"""
+
     entry = Entry.objects.get(id=entryID)
     topicName = entry.topic
 
-    # Protecting the edit_entry page
-    if topicName.owner != request.user:
-        raise Http404 # issue 404 error
+    # # Protecting the edit_entry page
+    # if topicName.owner != request.user:
+    #     raise Http404 # issue 404 error
+
+    checkTopicOwner(topicName, request) # refactoring function call
 
     if request.method != 'POST':
         # Initial request; pre-fill form with current entry
