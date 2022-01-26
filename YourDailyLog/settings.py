@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'YourDailyLog_App',
     'Users',
 
+    # Third party apps
+    'bootstrap4',
+
     # Django's default apps
     'django.contrib.admin',
     'django.contrib.auth',
