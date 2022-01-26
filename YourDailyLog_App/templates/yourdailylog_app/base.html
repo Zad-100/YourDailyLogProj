@@ -1,28 +1,200 @@
 <!--
-  This html file contains elements common to all pages; every other template
-  will inherit from this.
-  The only element that we want in each page is the title of the app at the 
-  top which also be the link to the home page.
+  This is for the navigation bar that will be present on top of every page.
+  The navigation bar contains the link to the home page, link to the index
+  of topics page, and the links to register, log in/log out.
 -->
 
-<p>
-  <a href="{% url 'YourDailyLog_App:index' %}">YOUR DAILY LOG</a> -
-  <a href="{% url 'YourDailyLog_App:topics' %}">Topics</a> -
-  
-  {% if user.is_authenticated %}
-    Heeellloooo, {{ user.username }}!
-    <!--Adding the log out link if the user is already authenticated-->
-    <a href="{% url 'Users:logout' %}">
-      Log Me Out, Em Bored!
-    </a>
-  {% else %}
-    <a href="{% url 'Users:register' %}">
-      Em new here. Take me in!
-    </a> -
-    <a href="{% url 'Users:login' %}">
-      Log In, Lovey-Dovey!
-    </a>
-  {% endif %}
-</p>
+<!--Loading the collection of template tags available in bootstrap4-->
+{% load bootstrap4 %}
 
-{% block content %}{% endblock content %}
+<!--Declaring this file as an HTML file in English ("en")-->
+<!doctype html>
+<html lang="en">
+
+  <!--
+    head tells the browser what it needs to know to display the page correctly
+  -->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+          shrink-to-fit=no">
+
+    <!--
+      To be displayed in the title bar of the browser everytime Your Daily Log
+      is opened.
+    -->
+    <title>Daily Log</title>
+
+    <!--
+      One of django-bootstrap4's custom template tags telling Django to
+      include all the Bootstrap style files
+    -->
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+  </head>
+
+  <!--Content users will see on a page-->
+  <body>
+    
+    <!--
+      <nav> element indicates the page's navigation links section;
+      everything that's contained in the <nav> element is styled according to
+      the Bootstrap styles defined by the selectors navbar, navbar-expand-md,
+      and the rest
+
+      Selectors determine which elements on a page a certain style applies to.
+      e.g.: navbar-light and bg-light style the navigation bar with a light
+      themed background
+
+      mb in mb-4 is short for margin-bottom which ensures that little space
+      appears between the navigation bar and the rest of the page
+
+      border selector provides a thin border around the light background to set
+      it off a little from the rest of the page
+    -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+
+      <!--
+        Setting the project's name to the far left of the navigation bar and
+        linking it to the home page; appearing on every page in the project
+
+        navbar-brand selector styles this link so it stands out from the rest
+        of the links and, in a way, brands the site
+      -->
+      <a class="navbar-brand" href="{% url 'YourDailyLog_App:index' %}">
+        YOUR DAILY LOG
+      </a>
+
+      <!--
+        Button that appears if the browser window is too narrow to display
+        the whole navigation bar horizontally; on clicking, the navigation bar
+        elements will appear in a drop-down list
+
+        collapse reference causes the navigation bar to collapse when the user
+        shrinks the browser window or when the site is displayed on mobile
+        devices
+      -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarCollapse" aria-controls="navbarCollapse"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!--
+        div is short for division; build a web page in sections and defining
+        style and behaviour rules that apply to that section: any styling or
+        behaviour rules that are defined in an opening div tag affect
+        everything until the next closing div tag
+
+        THIS IS THE BEGINNING OF THE SECTION OF THE NAVIGATION BAR THAT WILL
+        BE COLLAPSED ON NARROW SCREENS AND WINDOWS
+      -->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <!--
+          Defining a new set of links; Bootstrap defines navigation elements as
+          items in an unordered list.
+        -->
+        <ul class="navbar-nav mr-auto">
+
+          <!--
+            Only item here in this list is our link to Topics page
+          -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'YourDailyLog_App:topics' %}">
+              Topics
+            </a>
+          </li>
+
+        </ul>
+
+        <!--
+          ml-auto is short for margin-left-automatic: selector examines the
+          other elements in the nav-bar and works out a left margin that pushes
+          this group of links to the right side of the screen
+        -->
+        <ul class="navbar-nav ml-auto">
+
+          {% if user.is_authenticated %}
+
+            <li class="nav-item">
+
+              <!--
+                span element styles pieces of text, or elements of a page,
+                that are part of a longer line
+              -->
+              <span class="navbar-text">
+                Heeellloooo, {{ user.username }}!
+              </span>
+              <!--
+                Whereas div elements create their own division in a page, span
+                elements are continuous within a larger section.
+              -->
+
+            </li>
+
+            <!--Adding the log out link if the user is already authenticated-->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Users:logout' %}">
+                Em Bored; Log Me Out!
+              </a>
+            </li>
+
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Users:register' %}">
+                New here; Take Me in!
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Users:login' %}">
+                Old Customer; Log Me In!
+              </a>
+            </li>
+
+          {% endif %}
+
+        </ul>
+        
+      </div>
+
+    </nav>
+
+    <!--
+      main element used for the major/significant part of a page
+
+      bootstrap selector container is a simple way to group elements on a page
+    -->
+    <main role ="main" class="container">
+
+      <!--
+        selector pb-2: bootstrap directive providing a moderate amount of
+        padding at the bottom of the styled element
+
+        PADDING: space b/w an element's content and its border
+        MARGIN: space b/w an element's border and other elements on the page
+
+        selector border-bottom provides a thin border at the bottom of the
+        page_header block
+      -->
+      <div class="pb-2 mb-2 border-bottom">
+
+        <!--Use this block to title most pages-->
+        {% block page_header %}{% endblock page_header %}
+      </div>
+
+      <!--
+        Not applying any style for this block so that we can style the content
+        of any page as we see fit for that particular page
+      -->
+      <div>
+        {% block content %}{% endblock content %}
+      </div>
+
+    </main>
+
+  </body>
+
+</html>
