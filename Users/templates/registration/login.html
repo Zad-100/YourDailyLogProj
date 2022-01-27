@@ -6,36 +6,48 @@
 <!--Templates in an app can inherit from templates in another app-->
 {% extends "yourdailylog_app/base.html" %}
 
+<!--Loading the bootstrap4 template tags into this template-->
+{% load bootstrap4 %}
+
+<!--
+  Defining a pageHeader block that tells the user what this page is for
+
+  Also bootstrap4 manages form errors automatically
+-->
+{% block page_header %}
+
+  <!--Heading of the page-->
+  <h2>
+    Take Me To My Account
+  </h2>
+
+{% endblock page_header %}
+
 {% block content %}
-  
-  <!--
-    In case, errors arise and the username and password doesn't match any in
-    the database
-  -->
-  {% if for.errors %}
-    <!--Error message-->
-    <p>
-      Your username and password didn't match. lol
-      Please try again.
-    </p>
-  {% endif %}
 
-  <!--Telling the in-built login view function to process the form-->
-  <form method="post" action="{% url 'Users:login' %}">
+  <form method="post" action="{% url 'Users:login' %}"
+        class="form">
+
+    <!--
+      Securing the form
+    -->
     {% csrf_token %}
-    {{ form.as_p }} <!--Display form sent by the login view function-->
-
-    <button name="Submit">
-      Log In, Dear!
-    </button>
     
     <!--
-      Adding a hidden form element that tells Django about where to redirect
-      next after the user has logged in successfully - back to homepage in
-      this case
+      replaces the {{ formForLogin.as_p }} tag and inserts Bootstrap
+      style rules into the form's individual elements as the form is rendered
     -->
-    <input type="hidden", name="next"
-      value="{% url 'YourDailyLog_App:index' %}" />
+    {% bootstrap_form form %}
+
+    <!--Adding Bootstrap styling to buttons-->
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">
+        I'm sure, this is ME!
+      </button>
+    {% endbuttons %}
+
+    <input type="hidden" name="next"
+           value="{% url 'YourDailyLog_App:index' %}" />
   </form>
 
 {% endblock content %}
