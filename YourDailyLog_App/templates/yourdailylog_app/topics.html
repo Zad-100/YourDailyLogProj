@@ -6,29 +6,56 @@
 <!--Inherits from the base template-->
 {% extends "yourdailylog_app/base.html" %}
 
+<!--
+  No need to load bootstrap4 or the "load bootstrap4" tag, as we
+  are not using any custom bootstrap4 template tags in this file
+-->
+
+<!--Start of the page_header block that tells the user what the page is for-->
+{% block page_header %}
+  <h1>Your Topics</h1>
+{% endblock page_header %}
+
 <!--Start of the content block-->
 {% block content %}
-  <p>TOPICS</p>
-
   <!--
     The <ul> tag stands for 'unordered list' and the <li> tag creates bulleted
     lists
   -->
   <ul>
+
     <!--For loop start-->
-    {% for topic in topicNames %}
-      <li>
+    {% for topicName in topicNames %}
+
+    <li>
+      <h3>
 
         <!--Changing topic name to a link-->
-        <a href="{% url 'YourDailyLog_App:topic' topic.id %}">
-          {{ topic }}
+        <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
+          {{ topicName }}
         </a>
-      </li>
+
+      </h3>
+    </li>
+
     {% empty %}
-      No topics have been added yet.
+      <li>
+        <h3>
+          No topics have been added yet. Come on! Go grind! ;-)
+        </h3>
+      </li>
+    
     {% endfor %}
+
   </ul>
 
-  <a href="{% url 'YourDailyLog_App:new_topic' %}">Add a New Topic</a>
+  <h3>
+
+    <!--Creating a link to add new topics-->
+    <a href="{% url 'YourDailyLog_App:new_topic' %}">
+      I did something new! Lemme ADD A NEW TOPIC.
+    </a>
+
+  </h3>
 
 {% endblock content %}
