@@ -4,12 +4,52 @@
   what it does
 -->
 
+<!--Inheriting from the base template-->
 {% extends "yourdailylog_app/base.html" %}
 
-{% block content %}
-  <p>
-    Your Daily Log helps you maintain a journal about whatever you learn
-    about any topic throughout the day. Just register and start making entries
-    under a topic!
-  </p>
-{% endblock content %}
+{% block page_header %}
+
+  <!--
+    jumbotron is just a div element with a set of styling directives
+    applied to it
+  -->
+  <div class="jumbotron">
+    
+    <!--
+      Short message introducing the app to the users
+
+      h1 class is a first-level header, and the display-3 selector
+      adds a thinner and taller look to this particular header
+    -->
+    <h1 class="display-3">
+      Track Your Daily Activities/Learnings!
+    </h1>
+
+    <!--
+      Longer message that describes the app and tells the user what to do
+      next.
+    -->
+    <p class="lead">
+      Make your own daily log/entry, and keep a list of the topics you are
+      learning about or did something really exciting and worth it. Whenever
+      you learn or do something new about a certain topic, make an entry
+      specific to that topic summarising what you have done.
+    </p>
+
+    <!--
+      Creating a button inviting users to register their Daily Log account
+      PS: Same button as on the navigation bar
+
+      Selectors style the button to represent a call to action.
+
+      &raquo is an HTML entity that looks like two right angle brackets
+      combined (>>)
+    -->
+    <a class="btn btn-lg btn-primary" href="{% url 'Users:register' %}"
+       role="button">
+      I'm in! &raquo;
+    </a>
+
+  </div>
+
+{% endblock page_header %}
