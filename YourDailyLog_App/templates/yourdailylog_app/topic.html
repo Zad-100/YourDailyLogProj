@@ -7,52 +7,71 @@
 <!--Inherits from the base html file-->
 {% extends "yourdailylog_app/base.html" %}
 
+{% block page_header %}
+  <h3>
+    {{ topicName }}
+  </h3>
+{% endblock page_header %}
+
 {% block content %}
-
-  <p>Topic: {{ topicName }}</p>
-
-  <p>Entries:</p>
 
   <!--
     Including a link to the new_entry page from each topic page
   -->
   <p>
     <a href="{% url 'YourDailyLog_App:new_entry' topicName.id %}">
-      Add New Entry
+      I did something new about this! Lemme add it here!
     </a>
   </p>
 
   <!--
     Displaying the entries for the topics in chronological order
   -->
-  <ul>
-    {% for entry in entries %}
+  {% for entry in entries %}
 
-      <!--Show in bulleted lists-->
-      <li>
+    <!--
+      This card has two nested elements - one to hold the timestamp
+      and link to edit the entry, and other to hold the body of the
+      entry
+    -->
+    <div class="card mb-3">
+
+      <!--
+        This card-header contains the date the entry was made and a
+        link to edit the entry
+      -->
+      <h4 class="card-header">
 
         <!--First, display the Day, Date, Time-->
-        <p>
-          {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
-        </p>
-        
-        <!--After each entry give a line break-->
-        <p>
-          {{ entry.entryText|linebreaks }}
-        </p>
+        {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
 
-        <!--To edit the existing entry-->
-        <p>
+        <!--Makes the link a little smaller than the timestamp-->
+        <small>
+
+          <!--To edit the existing entry-->
           <a href="{% url 'YourDailyLog_App:edit_entry' entry.id %}">
-            edit
+            ---Edit This Entry---
           </a>
-        </p>
-      </li>
 
-    <!--If there are no entries under a particular topic-->  
-    {% empty %}
-      There are no entries for this topic yet.
-    {% endfor %}
-  </ul>
+        </small>
+
+      </h4>
+
+      <!--
+        card-body places the text of the entry in a simple box on the card
+      -->
+      <div class="card-body">
+
+        <!--After each entry give a line break-->
+        {{ entry.entryText|linebreaks }}
+
+      </div>
+
+    </div>
+
+  <!--If there are no entries under a particular topic-->  
+  {% empty %}
+    <p>There are no entries for this topic yet.</p>
+  {% endfor %}
 
 {% endblock content %}
