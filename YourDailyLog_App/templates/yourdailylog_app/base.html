@@ -125,7 +125,7 @@
                 that are part of a longer line
               -->
               <span class="navbar-text">
-                Heeellloooo, {{ user.username }}!
+                Heeelllooo, {{ user.username }}!
               </span>
               <!--
                 Whereas div elements create their own division in a page, span
@@ -137,20 +137,20 @@
             <!--Adding the log out link if the user is already authenticated-->
             <li class="nav-item">
               <a class="nav-link" href="{% url 'Users:logout' %}">
-                Em Bored; Log Me Out!
+                Done? Log Out!
               </a>
             </li>
 
           {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'Users:register' %}">
-                New here; Take Me in!
+                New? Register!
               </a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="{% url 'Users:login' %}">
-                Old Customer; Log Me In!
+                Old One? Log In!
               </a>
             </li>
 
