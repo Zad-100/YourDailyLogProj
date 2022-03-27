@@ -8,9 +8,11 @@
 {% extends "yourdailylog_app/base.html" %}
 
 {% block page_header %}
+
   <h3>
     {{ topicName }}
   </h3>
+
 {% endblock page_header %}
 
 {% block content %}
@@ -41,16 +43,26 @@
         link to edit the entry
       -->
       <h4 class="card-header">
+        
+        <b>
 
-        <!--First, display the Day, Date, Time-->
-        {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
+          <!--First, display the Day, Date, Time-->
+          {{ entry.dateAndTimeAdded|date:'M d, Y H:i' }}
+
+        </b>
+          
+        &nbsp&nbsp&nbsp&nbsp&nbsp <!-- adding spaces -->
 
         <!--Makes the link a little smaller than the timestamp-->
         <small>
 
           <!--To edit the existing entry-->
           <a href="{% url 'YourDailyLog_App:edit_entry' entry.id %}">
-            &nbsp&nbsp&nbsp&nbsp&nbsp Edit This Entry
+
+            <i>
+              Edit This Entry
+            </i>
+            
           </a>
 
         </small>
@@ -71,7 +83,9 @@
 
   <!--If there are no entries under a particular topic-->  
   {% empty %}
+
     <p>There are no entries for this topic yet.</p>
+    
   {% endfor %}
 
 {% endblock content %}

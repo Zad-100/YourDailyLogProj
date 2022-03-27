@@ -7,9 +7,11 @@
 {% load bootstrap4 %}
 
 {% block page_header %}
+
   <h2>
     I'm New Here, Take Me In!
   </h2>
+
 {% endblock page_header %}
 
 {% block content %}
@@ -21,13 +23,16 @@
   {% bootstrap_form formForRegistration %}
   
   {% buttons %}
+
     <button name="Submit" class="btn btn-primary">
       Lessgoo!!!
     </button>
+
   {% endbuttons %}
 
   <input type="hidden" name="next"
            value="{% url 'YourDailyLog_App:index' %}" />
+           
   </form>
 
 {% endblock content %}
