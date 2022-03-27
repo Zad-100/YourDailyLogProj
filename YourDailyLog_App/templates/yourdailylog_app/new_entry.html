@@ -5,27 +5,54 @@
 <!--Inherits from the base html file-->
 {% extends 'yourdailylog_app/base.html' %}
 
-{% block content %}
+{% load bootstrap4 %}
 
-  <p>
+{% block page_header %}
+  
+  <h2>
+
       <!--Changing the topic name to a link-->
       <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
-          {{ topicName }}
+        {{ topicName }}
       </a>
-  </p>
+
+  </h2>
+
+{% endblock page_header %}
+
+{% block content %}
   
-  <p>Create New Entry:</p>
+  <p>
+      <h5>
+        <b>Create New Entry:</b>
+      </h5>
+  </p>
   
   <!--
       form action takes the topic id to associate the entry with the correct
       topic
   -->
   <form action="{% url 'YourDailyLog_App:new_entry' topicName.id %}"
-                       method="post">
-      {% csrf_token %} <!--restrict unauthorised access to the server-->
-      {{ formForEntry.as_p }} <!--display all fields automatically and in
-                                  paragraphs-->
-      <button name="Submit">Add This Entry</button>
+                       method="post" class="form">
+
+      {% csrf_token %} <!-- restrict unauthorised access to the server -->
+      
+      <!--display all fields automatically and in paragraphs-->
+      <!-- {{ formForEntry.as_p }} -->
+
+      <!-- Bootstrap styled form -->
+      {% bootstrap_form formForEntry %}
+
+      <!-- <button name="Submit">Add This Entry</button> -->
+
+      {% buttons %}
+
+      <button name="Submit" class="btn btn-primary">
+        Add This Entry
+      </button>
+
+      {% endbuttons %}
+
   </form>
   
 {% endblock content %}
