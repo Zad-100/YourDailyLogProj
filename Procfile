@@ -1,0 +1,1 @@
+web: gunicorn YourDailyLog.wsgi --log-file -
