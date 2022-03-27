@@ -6,27 +6,52 @@
 <!--Inherits from the base html file-->
 {% extends 'yourdailylog_app/base.html' %}
 
+{% load bootstrap4 %}
+
+{% block page_header %}
+  
+  <h2>
+
+      <!--Display the topic name with the link to that topic's page-->
+      <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
+        {{ topicName }}
+      </a>
+
+  </h2>
+
+{% endblock page_header %}
+
 {% block content %}
 
-  <!--Display the topic name with the link to that topic's page-->
-  <p>
-    <a href="{% url 'YourDailyLog_App:topic' topicName.id %}">
-      {{ topicName }}
-    </a>
-  </p>
-
-  <p>Edit This entry:</p>
+<p>
+  <h5>
+    <b>Edit This Entry:</b>
+  </h5>
+</p>
   
   <!--Sending form back to edit_entry() for processing with the entry's ID-->
-  <form action="{% url "YourDailyLog_App:edit_entry" entry.id %}" 
-               method='post'>
+  <form action="{% url 'YourDailyLog_App:edit_entry' entry.id %}" 
+               method='post' class=""form>
                
-    {% csrf_token %}
-    {{ formForEditing.as_p }}
+    {% csrf_token %} <!-- security -->
 
-    <button name="Submit">
+    <!-- {{ formForEditing.as_p }} -->
+
+    <!-- Bootstrap styled form -->
+    {% bootstrap_form formForEditing %}
+
+    <!-- <button name="Submit">
       Save Changes
-    </button>
+    </button> -->
+
+    {% buttons %}
+
+      <button name="Submit" class="btn btn-primary">
+        Save Changes
+      </button>
+
+    {% endbuttons %}
+
   </form>
 
 {% endblock content %}
