@@ -138,3 +138,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # When an unauthenticated user requests a page protected by the @login_required
 # decorator, Django will send the user to the URL defiend here
 LOGIN_URL = "Users:login"
+
+# Heroku Settings
+import django_heroku
+
+# Modifies settings that need specific values for the Heroku environment
+django_heroku.settings(locals())
