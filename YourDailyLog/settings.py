@@ -144,3 +144,17 @@ import django_heroku
 
 # Modifies settings that need specific values for the Heroku environment
 django_heroku.settings(locals())
+
+# Setting DEBUG to 'FALSE' so that error pages are not shown on the live server
+# This is to make the web app more secure as the error messages give way too
+# much information for attackers
+
+import os
+
+# method os.environ.get() reads the value associated with a specific environment
+# variable in any environment where the project is running.
+if os.environ.get("DEBUG") == "TRUE": # not storing python's actual boolean
+                                      # values - True or False
+    DEBUG = True
+elif os.environ.get("DEBUG") == "FALSE":
+    DEBUG = False
