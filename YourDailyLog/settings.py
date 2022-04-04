@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,10 +61,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'YourDailyLog.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,7 +136,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# My settings
+# MY SETTINGS
 
 # When an unauthenticated user requests a page protected by the @login_required
 # decorator, Django will send the user to the URL defiend here
@@ -149,7 +152,6 @@ django_heroku.settings(locals())
 # This is to make the web app more secure as the error messages give way too
 # much information for attackers
 
-import os
 
 # method os.environ.get() reads the value associated with a specific environment
 # variable in any environment where the project is running.
