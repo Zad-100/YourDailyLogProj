@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -46,7 +46,7 @@ def topic(request, topicID):
        Show all the entries with their time stamp for a particular topic.
        The entries are shown in reverse chronological order.
     """
-    topicName = Topic.objects.get(id=topicID)
+    topicName = get_object_or_404(Topic, id=topicID)
 
     checkTopicOwner(topicName, request) # function call
 
