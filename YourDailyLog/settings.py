@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-f#1(3kz8k&4=x0psmt1ez!yh^4gr2^gp4lyc+2(g%(!^^ek73q
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    # My hosts
     "your-daily-log.azurewebsites.net",
 ]
 
