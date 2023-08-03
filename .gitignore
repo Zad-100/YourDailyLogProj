@@ -1,3 +1,12 @@
-ll_env/
-_pycache_/
+# My virtual environment
+dl_env/
+
+# Python executables
+__pycache__/
+
+# Local databases
 *.sqlite3
+db.sqlite3
+
+# VS Code configurations
+.vscode
