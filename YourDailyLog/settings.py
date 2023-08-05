@@ -30,6 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     # My hosts
     "your-daily-log.azurewebsites.net",
+    "127.0.0.1",
 ]
 
 
@@ -137,6 +138,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    # Azure Host
+    "https://*.your-daily-log.azurewebsites.net/",
+    
+    # Local host
+    'http://localhost:3000',
+]
 
 
 # MY SETTINGS
