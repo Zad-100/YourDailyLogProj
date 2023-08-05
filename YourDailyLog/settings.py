@@ -35,6 +35,11 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
+# MY SETTINGS
+
+# When an unauthenticated user requests a page protected by the @login_required
+# decorator, Django will send the user to the URL defiend here
+LOGIN_URL = "Users:login"
 
 INSTALLED_APPS = [
     # My apps to be included in the overall project
@@ -148,11 +153,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-# MY SETTINGS
-
-# When an unauthenticated user requests a page protected by the @login_required
-# decorator, Django will send the user to the URL defiend here
-LOGIN_URL = "Users:login"
 
 # # Heroku Settings
 # import django_heroku
