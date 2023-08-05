@@ -1,4 +1,4 @@
 # YourDailyLogProj
-This web app, named "Your Learning Log" lets users to register themselves and create entries about the new topics that they learned throughout the day. The home page invites an user to register or log in. Once logged in, user can make a new entry, view a previously saved entry or edit the same too.
+This web app, named "Your Daily Log" lets users register themselves and create entries about the new topics they learned throughout the day. The home page invites a user to register or log in. Once logged in, the user can make a new entry, view a previously saved entry, or edit the same.
 
-The app is hosted on Heroku site. However, I have not maintained it for a long time.
+The app is hosted on AzureWebsites.
